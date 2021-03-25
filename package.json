@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cvdlab/react-planner.git"
+    "url": "git+https://github.com/work-vayavodzin/react-planner.git"
   },
   "keywords": [
     "floorplanner",
@@ -39,31 +39,10 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cvdlab/react-planner/issues"
+    "url": "https://github.com/work-vayavodzin/react-planner/issues"
   },
-  "maintainers": [
-    {
-      "url": "https://github.com/chrvadala",
-      "name": "chrvadala"
-    },
-    {
-      "url": "https://github.com/danilosalvati",
-      "name": "danilosalvati"
-    },
-    {
-      "url": "https://github.com/enricomarino",
-      "name": "enricomarino"
-    },
-    {
-      "url": "https://github.com/federicospini",
-      "name": "federicospini"
-    },
-    {
-      "url": "https://github.com/alessiocarrafa",
-      "name": "alessiocarrafa"
-    }
-  ],
-  "homepage": "https://github.com/cvdlab/react-planner#readme",
+  "maintainers": [],
+  "homepage": "https://github.com/work-vayavodzin/react-planner#readme",
   "dependencies": {
     "@mapbox/react-range": "0.0.7",
     "area-polygon": "1.0.1",
