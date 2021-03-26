@@ -3,12 +3,13 @@ import {
   Mesh,
   RepeatWrapping,
   Vector2,
+  Matrix4,
   BoxGeometry,
   MeshBasicMaterial,
   Group
 } from 'three';
 
-import ThreeBSP from '../../utils/threeCSG.es6';
+import CSG from '../../utils/threeCSG.es6';
 import {verticesDistance} from '../../utils/geometry';
 import * as SharedStyle from '../../shared-style';
 
@@ -74,11 +75,11 @@ export function buildWall(element, layer, scene, textures)
   let sinAlpha = Math.sin(alpha);
   let cosAlpha = Math.cos(alpha);
 
-  soul.position.y += height / 2;
   soul.position.x += halfDistance * cosAlpha;
+  soul.position.y += height / 2;
   soul.position.z -= halfDistance * sinAlpha;
-
   soul.rotation.y = alpha;
+  soul.updateMatrix();
 
   element.holes.forEach( holeID => {
     let holeData = layer.holes.get(holeID);
@@ -92,17 +93,16 @@ export function buildWall(element, layer, scene, textures)
     let holeGeometry = new BoxGeometry( holeWidth, holeHeight, thickness );
     let holeMesh = new Mesh( holeGeometry );
 
-    holeMesh.position.y += holeHeight / 2 + holeAltitude;
     holeMesh.position.x += holeDistance * cosAlpha;
+    holeMesh.position.y += holeHeight / 2 + holeAltitude;
     holeMesh.position.z -= holeDistance * sinAlpha;
-
     holeMesh.rotation.y = alpha;
+    holeMesh.updateMatrix();
 
-    let wallBSP = new ThreeBSP( soul );
-    let holeBSP = new ThreeBSP( holeMesh );
-
+    let wallBSP = CSG.fromMesh( soul );
+    let holeBSP = CSG.fromMesh( holeMesh );
     let wallWithHoleBSP = wallBSP.subtract( holeBSP );
-    soul = wallWithHoleBSP.toMesh( soulMaterial );
+    soul = CSG.toMesh(wallWithHoleBSP, soul.matrix);
   });
 
   soul.name = 'soul';
