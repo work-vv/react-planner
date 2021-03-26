@@ -106,8 +106,7 @@ export default {
     return loadObjWithMaterial(mtl, obj, path.dirname(img) + '/')
       .then(object => {
         cachedJSONSofa = object.toJSON();
-        let loader = new ObjectLoader();
-        return onLoadItem(loader.parse(cachedJSONSofa))
+        return onLoadItem(object)
       });
   },
 

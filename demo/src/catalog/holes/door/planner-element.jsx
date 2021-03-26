@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Three from 'three';
+import {BoxHelper, Box3} from 'three';
 import {loadObjWithMaterial} from '../../utils/load-obj';
 import path from 'path';
 
@@ -93,14 +93,14 @@ export default {
 
   render3D: function (element, layer, scene) {
     let onLoadItem = (object) => {
-      let boundingBox = new Three.Box3().setFromObject(object);
+      let boundingBox = new Box3().setFromObject(object);
 
       let initialWidth = boundingBox.max.x - boundingBox.min.x;
       let initialHeight = boundingBox.max.y - boundingBox.min.y;
       let initialThickness = boundingBox.max.z - boundingBox.min.z;
 
       if (element.selected) {
-        let box = new Three.BoxHelper(object, 0x99c3fb);
+        let box = new BoxHelper(object, 0x99c3fb);
         box.material.linewidth = 2;
         box.material.depthTest = false;
         box.renderOrder = 1000;
