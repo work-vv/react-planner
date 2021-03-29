@@ -1,8 +1,9 @@
 import MTLLoader from './mtl-loader';
 import OBJLoader from './obj-loader';
+import GLTFLoader from './gltf-loader';
 import * as Three from 'three';
 
-export function loadObjWithMaterial(mtlFile, objFile, imgPath) {
+function loadObjWithMaterial(mtlFile, objFile, imgPath) {
   let mtlLoader = new MTLLoader();
   mtlLoader.setTexturePath(imgPath);
   let url = mtlFile;
@@ -17,4 +18,12 @@ export function loadObjWithMaterial(mtlFile, objFile, imgPath) {
     });
   });
 }
+function loadGLTFWithMaterial(gtlfFile) {
+  let gtlfLoader = new GLTFLoader();
+  return new Promise((resolve, reject) => {
+    gtlfLoader.load(gtlfFile, object => resolve(object.scene));
+  });
+}
+
+export {loadObjWithMaterial, loadGLTFWithMaterial};
 
