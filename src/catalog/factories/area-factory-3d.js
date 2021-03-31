@@ -1,7 +1,8 @@
+import { isValid } from 'shortid';
 import {
   Shape,
   MeshPhongMaterial,
-  ShapeGeometry,
+  ShapeBufferGeometry,
   Box3,
   TextureLoader,
   BackSide,
@@ -11,6 +12,7 @@ import {
   MeshBasicMaterial,
   RepeatWrapping,
   Vector2,
+  Vector3,
   DoubleSide
 } from 'three';
 import * as SharedStyle from '../../shared-style';
@@ -48,9 +50,20 @@ const applyTexture = (material, texture, length, height) => {
  */
 const assignUVs = (geometry) => {
   geometry.computeBoundingBox();
+  let box = geometry.boundingBox;
+  let size = new Vector3();
+  box.getSize(size);
 
-  geometry.uvsNeedUpdate = true;
-};
+  var pos = geometry.attributes.position;
+  let uv = geometry.attributes.uv;
+  let v3 = new Vector3();
+  pos.array.forEach((item, i) => {
+    v3.fromBufferAttribute(pos, i);
+    v3.subVectors(v3, box.min).divide(size); // cast world uvs to range 0..1
+    uv.setXY(i, v3.x, v3.y);
+  });
+  uv.needsUpdate = true;
+}
 
 export function createArea(element, layer, scene, textures) {
   let vertices = [];
@@ -88,7 +101,7 @@ export function createArea(element, layer, scene, textures) {
     shape.holes.push(holeShape);
   });
 
-  let shapeGeometry = new ShapeGeometry(shape);
+  let shapeGeometry = new ShapeBufferGeometry(shape);
   assignUVs(shapeGeometry);
 
   let boundingBox = new Box3().setFromObject(new Mesh(shapeGeometry, new MeshBasicMaterial()));
