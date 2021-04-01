@@ -77,7 +77,7 @@ export function createArea(element, layer, scene, textures) {
 
   if (element.selected) {
     color = SharedStyle.AREA_MESH_COLOR.selected;
-  } else if (textureName && textureName !== 'none') {
+  } else if (!color) {
     color = SharedStyle.AREA_MESH_COLOR.unselected;
   }
 

@@ -52,8 +52,17 @@ export default function AreaFactory(name, info, textures) {
       });
 
       let fill = element.selected ? SharedStyle.AREA_MESH_COLOR.selected : element.properties.get('patternColor');
-
-      return (<path d={path} fill={fill} />);
+      let textureName = element.properties.get('texture');
+      let uri = textures[textureName] ? textures[textureName].uri : "";
+      console.log(uri);
+      return (<g>
+        <pattern id="img1" patternUnits="userSpaceOnUse" width="50" height="50"   >
+          <image xlinkHref={uri} x="0" y="0" width="50" height="50"   />
+        </pattern>
+        <path d={path}fill={fill} fillOpacity="1" />
+        <path d={path} fill="url(#img1)" fillOpacity="1" />
+        <path d={path}fill={fill} fillOpacity="0.5" />
+        </g>);
     },
 
     render3D: function (element, layer, scene) {
