@@ -14,7 +14,7 @@ for( let x in Items ) catalog.registerElement( Items[x] );
 
 catalog.registerCategory('windows', 'Windows', [Holes.window, Holes.sashWindow, Holes.venetianBlindWindow, Holes.windowCurtain] );
 catalog.registerCategory('doors', 'Doors', [Holes.door] );
-catalog.registerCategory('kitchen', 'Kitchen', [Items.fridge]);
+catalog.registerCategory('kitchen', 'Kitchen', []);
 catalog.registerCategory('bathroom', 'Bathroom', []);
 catalog.registerCategory('dining-room', 'Dining room', []);
 catalog.registerCategory('living-room', 'Living room', []);
