@@ -117,19 +117,38 @@ export default {
       return object;
     };
 
-    if(cached3DDoor) {
-      return Promise.resolve(onLoadItem(cached3DDoor.clone()));
-    }
-
     let mtl = require('./door.mtl');
     let obj = require('./door.obj');
     let img = require('./texture.jpg');
 
-    return loadObjWithMaterial(mtl, obj, path.dirname(img) + '/')
+    return loadObjWithMaterial(mtl, obj)
       .then(object => {
         cached3DDoor = object;
         return onLoadItem(cached3DDoor.clone())
       })
 
+  },
+
+  updateRender3D: ( element, layer, scene, mesh, oldElement, differences, selfDestroy, selfBuild ) => {
+
+    let noPerf = () => { selfDestroy(); return selfBuild(); };
+
+    if( differences.indexOf('selected') !== -1 )
+    {
+      mesh.traverse(( child ) => {
+        if ( child instanceof BoxHelper ) {
+          child.visible = element.selected;
+        }
+      });
+
+      return Promise.resolve(mesh);
+    }
+
+    if( differences.indexOf('rotation') !== -1 ) {
+      mesh.rotation.y = element.rotation * Math.PI / 180;
+      return Promise.resolve(mesh);
+    }
+
+    return noPerf();
   }
 };

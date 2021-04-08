@@ -1,20 +1,33 @@
-import MTLLoader from './mtl-loader';
-import OBJLoader from './obj-loader';
+import {MTLLoader} from './mtl-loader';
+import {OBJLoader} from './obj-loader';
 import GLTFLoader from './gltf-loader';
-import * as Three from 'three';
+import {LoadingManager, ObjectLoader} from "three";
 
-function loadObjWithMaterial(mtlFile, objFile, imgPath) {
-  let mtlLoader = new MTLLoader();
-  mtlLoader.setTexturePath(imgPath);
+let manager = new LoadingManager();
+let mtlLoader = new MTLLoader(manager);
+let objLoader = new OBJLoader(manager);
+let loader = new ObjectLoader();
+let pool = new Map();
+
+function loadObjWithMaterial(mtlFile, objFile, path) {
+  let key = mtlFile + objFile + path;
+  if (pool.has(key) && pool.get(key)) {
+    return Promise.resolve(loader.parse(pool.get(key)));
+  }
+ // mtlLoader.setPath(path);
   let url = mtlFile;
   return new Promise((resolve, reject) => {
 
     mtlLoader.load(url, materials => {
       materials.preload();
-      let objLoader = new OBJLoader(new Three.LoadingManager());
-      objLoader.setMaterials(materials);
-      objLoader.load(objFile, object => resolve(object));
-
+      Promise.all(materials.promises).then(res =>{
+        console.log(res);
+        objLoader.setMaterials(materials);
+        objLoader.load(objFile, object => {
+          pool.set(key, object.toJSON());
+          resolve(object);
+        });
+      });
     });
   });
 }
