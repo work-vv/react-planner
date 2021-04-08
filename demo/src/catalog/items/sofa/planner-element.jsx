@@ -7,7 +7,6 @@ import React from 'react';
 
 const mtl = require('./sofa.mtl');
 const obj = require('./sofa.obj');
-const img = require('./texture.jpg');
 
 const width = {length: 180, unit: 'cm'};
 const depth = {length: 60, unit: 'cm'};
@@ -97,15 +96,8 @@ export default {
       return object;
     };
 
-    if (cachedJSONSofa) {
-      let loader = new ObjectLoader();
-      let object = loader.parse(cachedJSONSofa);
-      return Promise.resolve(onLoadItem(object));
-    }
-
-    return loadObjWithMaterial(mtl, obj, path.dirname(img) + '/')
+    return loadObjWithMaterial(mtl, obj)
       .then(object => {
-        cachedJSONSofa = object.toJSON();
         return onLoadItem(object)
       });
   },

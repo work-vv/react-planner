@@ -176,6 +176,7 @@ MTLLoader.MaterialCreator = function ( baseUrl, options ) {
   this.materials = {};
   this.materialsArray = [];
   this.nameLookup = {};
+  this.promises = [Promise.resolve('loading')];
 
   this.side = ( this.options && this.options.side ) ? this.options.side : FrontSide;
   this.wrap = ( this.options && this.options.wrap ) ? this.options.wrap : RepeatWrapping;
@@ -551,8 +552,10 @@ MTLLoader.MaterialCreator.prototype = {
     }
 
     if ( loader.setCrossOrigin ) loader.setCrossOrigin( this.crossOrigin );
-    texture = loader.load( url, onLoad, onProgress, onError );
-
+    let imageLoaded = new Promise((res, rej) => {
+      texture = loader.load( url, image => res('loaded'), null, fail => rej('failed'));
+    });
+    this.promises.push(imageLoaded);
     if ( mapping !== undefined ) texture.mapping = mapping;
 
     return texture;
