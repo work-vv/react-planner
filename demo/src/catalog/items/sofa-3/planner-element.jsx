@@ -5,25 +5,25 @@ import convert from 'convert-units';
 
 import React from 'react';
 
-const mtl = require('./convertible-sofa-BZ-closed.mtl');
-const obj = require('./convertible-sofa-BZ-closed.obj');
-const texture = require('./texturefabric.jpg');
-const image2d = require('./convertible-sofa-BZ-closed-2d.png');
+const mtl = require('./burlap-sofa.mtl');
+const obj = require('./burlap-sofa.obj');
+const texture = require('./bump-sofa.jpg');
+const image2d = require('./burlap-sofa-2d.png');
 
-const width = {length: 140, unit: 'cm'};
-const depth = {length: 102, unit: 'cm'};
-const height = {length: 87, unit: 'cm'};
-const scale = 1;
+const width = {length: 170, unit: 'cm'};
+const depth = {length: 90, unit: 'cm'};
+const height = {length: 80, unit: 'cm'};
+const scale = 100;
 
 export default {
-  name: 'sofa',
+  name: 'sofa-2',
   prototype: 'items',
 
   info: {
     title: 'sofa-2',
-    tag: ['furnishings', 'convertible sofa'],
-    description: 'Convertible sofa',
-    image: require('./convertible-sofa-BZ-closed.jpg')
+    tag: ['furnishings', 'brlap'],
+    description: 'Burlap sofa',
+    image: require('./burlap-sofa.jpg')
   },
 
   properties: {},
@@ -74,26 +74,4 @@ export default {
       });
   },
 
-  updateRender3D: ( element, layer, scene, mesh, oldElement, differences, selfDestroy, selfBuild ) => {
-
-    let noPerf = () => { selfDestroy(); return selfBuild(); };
-
-    if( differences.indexOf('selected') !== -1 )
-    {
-      mesh.traverse(( child ) => {
-        if ( child instanceof BoxHelper ) {
-          child.visible = element.selected;
-        }
-      });
-
-      return Promise.resolve(mesh);
-    }
-
-    if( differences.indexOf('rotation') !== -1 ) {
-      mesh.rotation.y = element.rotation * Math.PI / 180;
-      return Promise.resolve(mesh);
-    }
-
-    return noPerf();
-  }
 };
