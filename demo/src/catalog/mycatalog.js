@@ -13,7 +13,17 @@ for( let x in Holes ) catalog.registerElement( Holes[x] );
 for( let x in Items ) catalog.registerElement( Items[x] );
 
 catalog.registerCategory('windows', 'Windows', [Holes.window, Holes.sashWindow, Holes.venetianBlindWindow, Holes.windowCurtain] );
-catalog.registerCategory('doors', 'Doors', [Holes.door, Holes.doorDouble, Holes.panicDoor, Holes.panicDoorDouble, Holes.slidingDoor] );
-catalog.registerCategory('kitchen', 'Kitchen', [Holes.fridge1, Holes.fridge2, Holes.fridge3]);
+catalog.registerCategory('doors', 'Doors', [Holes.door] );
+catalog.registerCategory('kitchen', 'Kitchen', []);
+catalog.registerCategory('bathroom', 'Bathroom', []);
+catalog.registerCategory('dining-room', 'Dining room', []);
+catalog.registerCategory('living-room', 'Living room', []);
+catalog.registerCategory('baby-room', 'Kids & baby room', []);
+catalog.registerCategory('bedroom', 'Bedroom', []);
+catalog.registerCategory('office', 'Office', []);
+catalog.registerCategory('outdoor', 'Outdoor', []);
+catalog.registerCategory('lighting', 'Lighting', []);
+catalog.registerCategory('electrical', 'Electrical', []);
+catalog.registerCategory('accessories', 'Accessories', []);
 
 export default catalog;
