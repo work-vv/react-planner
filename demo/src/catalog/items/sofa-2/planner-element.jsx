@@ -7,7 +7,7 @@ import React from 'react';
 
 const mtl = require('./burlap-sofa.mtl');
 const obj = require('./burlap-sofa.obj');
-const texture = require('./bump-sofa.jpg');
+const preview = require('./burlap-sofa.jpg');
 const image2d = require('./burlap-sofa-2d.png');
 
 const width = {length: 170, unit: 'cm'};
@@ -23,7 +23,7 @@ export default {
     title: 'sofa-2',
     tag: ['furnishings', 'burlap sofa', 'bump sofa'],
     description: 'Burlap sofa',
-    image: require('./burlap-sofa.jpg')
+    image: preview,
   },
 
   properties: {},
