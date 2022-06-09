@@ -4,36 +4,32 @@ import convert from 'convert-units';
 
 import React from 'react';
 
-let width, depth, height, scale, unit;
-let el, preview, image2d;
+export default class Element {
 
-let object = {
-
-  init: function ({ name, prototype, info, properties, size, asset }) {
+  constructor ({ name, prototype, info, properties, size, asset }) {
     this.name = name;
     this.prototype = prototype;
     this.info = info;
     this.properties = properties;
-    ({width, depth, height, scale, unit} = size);
-    ({el, preview, image2d} = asset);
-    return this;
-  },
+    this.size = size;
+    this.asset = asset;
+  }
 
-  render2D: function (element, layer, scene) {
+  render2D (element, layer, scene) {
+
 
     return (
-      <g transform={`translate(${-width / 2},${-depth / 2})`}>
-        <image href={image2d}  width={width} height={depth} />
+      <g transform={`translate(${-this.size.width / 2},${-this.size.depth / 2})`}>
+        <image href={this.asset.image2d}  width={this.size.width} height={this.size.depth} />
       </g>
-    );  
-  },
+    );
+  }
 
-  render3D: function (element, layer, scene) {
-
+  render3D (element, layer, scene) {
     let onLoadItem = (object) => {
-      let newWidth = convert(width).from(unit).to(scene.unit) * scale;
-      let newHeight = convert(height).from(unit).to(scene.unit) * scale;
-      let newDepth = convert(depth).from(unit).to(scene.unit) * scale;
+      let newWidth = convert(this.size.width).from(this.size.unit).to(scene.unit) * this.size.scale;
+      let newHeight = convert(this.size.height).from(this.size.unit).to(scene.unit) * this.size.scale;
+      let newDepth = convert(this.size.depth).from(this.size.unit).to(scene.unit) * this.size.scale;
 
       let box = new BoxHelper(object, 0x99c3fb);
       box.material.linewidth = 2;
@@ -42,7 +38,7 @@ let object = {
       box.visible = element.selected;
       object.add(box);
 
-      object.scale.set(newWidth / width, newHeight / height, newDepth / depth);
+      object.scale.set(newWidth / this.size.width, newHeight / this.size.height, newDepth / this.size.depth);
 
       // Normalize the origin of this item
       let boundingBox = new Box3().setFromObject(object);
@@ -59,13 +55,13 @@ let object = {
       return object;
     };
 
-    return loadUnit(el)
+    return loadUnit(this.asset.el)
       .then(object => {
         return onLoadItem(object)
       });
-  },
+  }
 
-  updateRender3D: ( element, layer, scene, mesh, oldElement, differences, selfDestroy, selfBuild ) => {
+  updateRender3D ( element, layer, scene, mesh, oldElement, differences, selfDestroy, selfBuild ) {
 
     let noPerf = () => { selfDestroy(); return selfBuild(); };
 
@@ -87,6 +83,4 @@ let object = {
 
     return noPerf();
   }
-};
-
-export default Object.assign(object);
+}

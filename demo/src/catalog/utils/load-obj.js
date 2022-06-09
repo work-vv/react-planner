@@ -18,11 +18,11 @@ function loadUnit(el) {
       loader = loadObjWithMaterial(el.mtl, el.obj)
       break;
     case 'gtlf':
-      loader = loadGtlfWithMaterial(el.gtlf)  
+      loader = loadGtlfWithMaterial(el.gtlf)
     default:
-      throw Error('unsupported format');  
+      throw Error('unsupported format');
   }
-      
+
   return loader;
 }
 
@@ -37,11 +37,11 @@ function loadObjWithMaterial(mtlFile, objFile) {
 
     mtlLoader.load(url, materials => {
       materials.preload();
-      Promise.all(materials.promises).then(res =>{
+      Promise.allSettled(materials.promises).then(res =>{
         console.log(res);
         objLoader.setMaterials(materials);
         objLoader.load(objFile, object => {
-        //  pool.set(key, object.toJSON());
+          pool.set(key, object.toJSON());
           resolve(object);
         });
       });

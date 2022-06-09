@@ -176,7 +176,7 @@ MTLLoader.MaterialCreator = function ( baseUrl, options ) {
   this.materials = {};
   this.materialsArray = [];
   this.nameLookup = {};
-  this.promises = [Promise.resolve('loading')];
+  this.promises = [];
 
   this.side = ( this.options && this.options.side ) ? this.options.side : FrontSide;
   this.wrap = ( this.options && this.options.wrap ) ? this.options.wrap : RepeatWrapping;

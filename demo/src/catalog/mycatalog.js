@@ -11,7 +11,9 @@ import {default as ItemPlanner} from './items/planner-element.jsx';
 for( let x in Areas ) catalog.registerElement( Areas[x]);
 for( let x in Lines ) catalog.registerElement( Lines[x]);
 for( let x in Holes ) catalog.registerElement( Holes[x]);
-for( let x in Items ) catalog.registerElement( ItemPlanner.init(Items[x]));
+for( let x in Items ) {
+  catalog.registerElement( new ItemPlanner(Items[x]));
+};
 
 catalog.registerCategory('windows', 'Windows', [Holes.window, Holes.sashWindow, Holes.venetianBlindWindow, Holes.windowCurtain] );
 catalog.registerCategory('doors', 'Doors', [Holes.door]);

@@ -1,6 +1,6 @@
 export default {
-  name: "tv", 
-  prototype: "items", 
+  name: "tv",
+  prototype: "items",
   info: {
     title: "tv",
     tag: ['furnishing', 'electronics'],
