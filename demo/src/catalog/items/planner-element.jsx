@@ -55,7 +55,7 @@ export default class Element {
       return object;
     };
 
-    return loadUnit(this.asset.el)
+    return loadUnit(this.asset.model)
       .then(object => {
         return onLoadItem(object)
       });

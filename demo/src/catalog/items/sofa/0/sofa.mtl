@@ -18,7 +18,7 @@ Ks 0.080000 0.080000 0.080000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd bump-sofa.jpg
+map_Kd texture-bump.jpg
 
 
 newmtl cosins

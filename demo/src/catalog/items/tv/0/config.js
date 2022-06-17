@@ -9,27 +9,27 @@ export default {
   },
   properties: {
     altitude: {
-        label: "Altitude",
-        type: "length-measure",
-        defaultValue: {
+      label: "Altitude",
+      type: "length-measure",
+      defaultValue: {
         length: 0
       }
     }
   },
   size: {
-    width: 160,
-    depth: 10,
+    width: 80,
+    depth: 20,
     height: 80,
-    scale: 100,
+    scale: 50,
     unit: 'cm',
   },
   asset: {
-    image2d: require("./tv.png"),
-    el: {
-        type: "obj",
-        mtl: require("./tv.mtl"),
-        obj: require("./tv.obj"),
-        textures: [],
+    image2d: require("./tv-2d.png"),
+    model: {
+      type: "obj",
+      object: require("./tv.obj"),
+      material: require("./tv.mtl"),
+      textures: [],
     }
   }
 }
