@@ -107,8 +107,10 @@ export function buildWall(element, layer, scene, textures)
 
   soul.name = 'soul';
 
-  let frontMaterial = new MeshBasicMaterial();
-  let backMaterial = new MeshBasicMaterial();
+  let colorA = element.properties.get('patternColorA');
+  let colorB = element.properties.get('patternColorB');
+  let frontMaterial = new MeshBasicMaterial({color: colorA});
+  let backMaterial = new MeshBasicMaterial({color: colorB});
 
   applyTexture(frontMaterial, textures[element.properties.get('textureB')], distance, height);
   applyTexture(backMaterial, textures[element.properties.get('textureA')], distance, height);

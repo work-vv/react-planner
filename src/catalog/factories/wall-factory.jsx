@@ -19,6 +19,16 @@ export default function WallFactory(name, info, textures) {
     prototype: 'lines',
     info,
     properties: {
+      patternColorA: {
+        label: translator.t('color') + ' A',
+        type: 'color',
+        defaultValue: SharedStyle.LINE_MESH_COLOR.unselected
+      },
+      patternColorB: {
+        label: translator.t('color') + ' B',
+        type: 'color',
+        defaultValue: SharedStyle.LINE_MESH_COLOR.unselected
+      },
       height: {
         label: translator.t('height'),
         type: 'length-measure',
