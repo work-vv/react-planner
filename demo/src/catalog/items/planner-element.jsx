@@ -32,12 +32,13 @@ export default class Element {
       let newDepth = convert(this.size.depth).from(this.size.unit).to(scene.unit) * this.size.scale;
       let altitude = element.properties.get('altitude') ? element.properties.get('altitude').get('length') : 0;
 
-      let box = new BoxHelper(object, 0x99c3fb);
-      box.material.linewidth = 2;
-      box.material.depthTest = false;
-      box.renderOrder = 1000;
-      box.visible = element.selected;
-      object.add(box);
+      if (element.selected) {
+        let box = new Three.BoxHelper(object, 0x99c3fb);
+        box.material.linewidth = 2;
+        box.material.depthTest = false;
+        box.renderOrder = 1000;
+        object.add(box);
+      }
 
       object.scale.set(newWidth / this.size.width, newHeight / this.size.height, newDepth / this.size.depth);
 
@@ -65,22 +66,6 @@ export default class Element {
   updateRender3D ( element, layer, scene, mesh, oldElement, differences, selfDestroy, selfBuild ) {
 
     let noPerf = () => { selfDestroy(); return selfBuild(); };
-
-    if( differences.indexOf('selected') !== -1 )
-    {
-      mesh.traverse(( child ) => {
-        if ( child instanceof BoxHelper ) {
-          child.visible = element.selected;
-        }
-      });
-
-      return Promise.resolve(mesh);
-    }
-
-    if( differences.indexOf('rotation') !== -1 ) {
-      mesh.rotation.y = element.rotation * Math.PI / 180;
-      return Promise.resolve(mesh);
-    }
 
     return noPerf();
   }
