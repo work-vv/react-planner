@@ -30,6 +30,7 @@ export default class Element {
       let newWidth = convert(this.size.width).from(this.size.unit).to(scene.unit) * this.size.scale;
       let newHeight = convert(this.size.height).from(this.size.unit).to(scene.unit) * this.size.scale;
       let newDepth = convert(this.size.depth).from(this.size.unit).to(scene.unit) * this.size.scale;
+      let altitude = element.properties.get('altitude') ? element.properties.get('altitude').get('length') : 0;
 
       let box = new BoxHelper(object, 0x99c3fb);
       box.material.linewidth = 2;
@@ -49,7 +50,7 @@ export default class Element {
         (boundingBox.max.z - boundingBox.min.z) / 2 + boundingBox.min.z];
 
       object.position.x -= center[0];
-      object.position.y -= center[1] - (boundingBox.max.y - boundingBox.min.y) / 2;
+      object.position.y -= center[1] - (boundingBox.max.y - boundingBox.min.y) / 2 - altitude
       object.position.z -= center[2];
 
       return object;
