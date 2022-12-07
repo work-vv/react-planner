@@ -1,4 +1,4 @@
-import {BoxHelper, Box3, ObjectLoader} from 'three';
+import {BoxHelper, Box3} from 'three';
 import {loadUnit} from '../utils/load-obj';
 import convert from 'convert-units';
 
@@ -16,11 +16,9 @@ export default class Element {
   }
 
   render2D (element, layer, scene) {
-
-
     return (
       <g transform={`translate(${-this.size.width / 2},${-this.size.depth / 2})`}>
-        <image href={this.asset.image2d}  width={this.size.width} height={this.size.depth} />
+        <image href={this.asset.image2d}  width={this.size.width} />
       </g>
     );
   }
@@ -33,7 +31,7 @@ export default class Element {
       let altitude = element.properties.get('altitude') ? element.properties.get('altitude').get('length') : 0;
 
       if (element.selected) {
-        let box = new Three.BoxHelper(object, 0x99c3fb);
+        let box = new BoxHelper(object, 0x99c3fb);
         box.material.linewidth = 2;
         box.material.depthTest = false;
         box.renderOrder = 1000;
